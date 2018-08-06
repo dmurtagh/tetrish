@@ -23,15 +23,11 @@ public class PlayerController : MonoBehaviour
     // For jumping
     bool m_DoubleJump = false;
 
-    // Debug stuff
-    Vector2 m_StartPosition;
-
     // Use this for initialization
     void Start ()
     {
         m_Rigidbody2d = GetComponent(typeof(Rigidbody2D)) as Rigidbody2D;
         m_Animator = GetComponent(typeof(Animator)) as Animator;
-        m_StartPosition = m_Rigidbody2d.position;
 	}
 
     private void Update()
@@ -44,7 +40,11 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.GetResetKeyDown())
         {
-            m_Rigidbody2d.position = m_StartPosition;
+            var resettables = FindObjectsOfType<AResettable>();
+            foreach (var resettable in resettables)
+            {
+                resettable.Reset();
+            }
         }
     }
 
