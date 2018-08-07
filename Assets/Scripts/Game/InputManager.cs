@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Key mappings from http://wiki.unity3d.com/index.php/Xbox360Controller
+ */
 public class InputManager : Singleton<InputManager>
 {
     public float m_ControllerDeadzone = 0.11f;
@@ -13,7 +16,12 @@ public class InputManager : Singleton<InputManager>
 
     public bool GetResetKeyDown()
     {
-        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button6);
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button6); // Back Button
+    }
+
+    public bool GetNextTrackKeyDown()
+    {
+        return Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.Joystick1Button4); // Left bumper
     }
 
     public float GetLeftStickHorizontal()
