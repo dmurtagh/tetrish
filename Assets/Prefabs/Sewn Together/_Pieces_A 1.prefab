@@ -139,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1255861704835876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.65, y: 8.7, z: 0}
+  m_LocalPosition: {x: 0.6964998, y: 8.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4898898314809576}
@@ -379,6 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114709735052693784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114909122790579278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -401,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114980442167929416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -412,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!212 &212175629963991746
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -644,6 +648,6 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.6403582, y: 0}
+  m_ConnectedAnchor: {x: 0.6403585, y: 0}
   m_DampingRatio: 0
   m_Frequency: 0

@@ -363,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114412414471784834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -374,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114618155199887058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -385,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114863111437261966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -397,6 +400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SubSquares: []
+  m_CenterSquare: {fileID: 0}
 --- !u!114 &114934901650739016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -408,6 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!212 &212276574244944286
 SpriteRenderer:
   m_ObjectHideFlags: 1

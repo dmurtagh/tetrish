@@ -113,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1400101029986920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.653, y: 8.69, z: 0}
+  m_LocalPosition: {x: 0.69350004, y: 8.69, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 4988258285339864}
@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114553340982459522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -377,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114718966586726428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -388,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114802451334539066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -399,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114874178792021070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -627,7 +631,7 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.0000003260189, y: 0.638342}
+  m_ConnectedAnchor: {x: -0, y: 0.638342}
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!255 &255778360357274904
@@ -644,6 +648,6 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.63834107, y: 0.638342}
+  m_ConnectedAnchor: {x: -0.6383407, y: 0.638342}
   m_DampingRatio: 0
   m_Frequency: 0

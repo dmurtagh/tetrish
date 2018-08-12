@@ -9,7 +9,7 @@ public class BoardController : MonoBehaviour
     public GameObject m_RowCheckerPrefab;
     public LayerMask m_BlocksLayerMask;
 
-    private List<BoxCollider2D> m_GamePieceSquares;
+    private List<GamePiece> m_GamePieces;
     private int kNumColumns = 10;
     private int kNumRows = 20;
     private List<BoxCollider2D> m_RowCheckers;
@@ -17,7 +17,7 @@ public class BoardController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        m_GamePieceSquares = new List<BoxCollider2D>();
+        m_GamePieces = new List<GamePiece>();
         m_RowCheckers = new List<BoxCollider2D>();
         RectTransform rectTransform = m_BoardRoot.transform as RectTransform;
         Vector3 position = rectTransform.position;
@@ -26,14 +26,44 @@ public class BoardController : MonoBehaviour
 
         for (int i = 0; i < kNumRows; i++)
         {
-            GameObject newGameObject = Instantiate(m_RowCheckerPrefab, new Vector3(position.x, position.y + step * i, position.z), Quaternion.identity, m_BoardRoot.transform);
+            GameObject newGameObject = Instantiate(m_RowCheckerPrefab, new Vector3(0, position.y + step * i, position.z), Quaternion.identity, m_BoardRoot.transform);
             m_RowCheckers.Add(newGameObject.GetComponent(typeof(BoxCollider2D)) as BoxCollider2D);
         }
         StartCoroutine(SpawnerCoroutine());
 	}
 
-	private void Update()
-	{
+    private void Update()
+    {
+        m_GamePieces.RemoveAll(IsDestroyedPredicate);
+        CheckForLineCompletion();
+        CorrectPositions();
+    }
+
+    private static bool IsDestroyedPredicate(GamePiece obj)
+    {
+        return obj.m_SubSquares.Count == 0;
+    }
+
+    /**
+     * Correct the positions of all pieces which aren't moving
+     */
+    private void CorrectPositions()
+    {
+        foreach (var gamePiece in m_GamePieces)
+        {
+            foreach (var gamePieceSquare in gamePiece.m_SubSquares)
+            {
+                Debug.LogError("Velocity = " + gamePieceSquare.m_Rigidbody2D.velocity.SqrMagnitude().ToString());
+                if (gamePieceSquare.m_Rigidbody2D.velocity.SqrMagnitude() < 1f)
+                {
+                    
+                }
+            }
+        }
+    }
+
+    private void CheckForLineCompletion()
+    {
         Collider2D[] overlappingColliders = new Collider2D[kNumColumns];
         ContactFilter2D filter2D = new ContactFilter2D();
         filter2D.SetLayerMask(m_BlocksLayerMask);
@@ -45,7 +75,6 @@ public class BoardController : MonoBehaviour
             {
                 // Check that all the z-rotations are less than 10-degress
                 bool allBlocksAligned = true;
-                Debug.LogError("zzzzzzzz");
                 foreach(var square in overlappingColliders)
                 {
                     float kCutoff = 10f; // Allow 10 degrees either side of upright;
@@ -102,6 +131,6 @@ public class BoardController : MonoBehaviour
             newGameObject.transform.position.z
         );
 
-        m_GamePieceSquares.AddRange(gamePiece.m_SubSquares);
+        m_GamePieces.Add(gamePiece);
     }
 }

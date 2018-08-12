@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class GamePiece : MonoBehaviour
 {
-    public BoxCollider2D [] m_SubSquares;
+    public List<GamePieceSquare> m_SubSquares;
     public GameObject m_CenterSquare;
 
 	// Use this for initialization
 	void Start () 
     {
-        m_SubSquares = GetComponentsInChildren<BoxCollider2D>();
+        m_SubSquares = new List<GamePieceSquare>(GetComponentsInChildren<GamePieceSquare>());
+        foreach (var gamePieceSquare in m_SubSquares)
+        {
+            gamePieceSquare.OnDestroyFunction = (GamePieceSquare square) =>
+            {
+                m_SubSquares.Remove(square);
+            };
+        }
 	}
 }
