@@ -8,6 +8,8 @@ public class BoardController : MonoBehaviour
     public GameObject m_BoardRoot;
     public GameObject m_RowCheckerPrefab;
     public LayerMask m_BlocksLayerMask;
+    public bool dropPieces = true;  // Kill switch
+    public bool correctPositions = true;
 
     private List<GamePiece> m_GamePieces;
     private int kNumColumns = 10;
@@ -36,7 +38,11 @@ public class BoardController : MonoBehaviour
     {
         m_GamePieces.RemoveAll(IsDestroyedPredicate);
         CheckForLineCompletion();
-        CorrectPositions();
+
+        if (correctPositions)
+        {
+            CorrectPositionsIndependent();
+        }
     }
 
     private static bool IsDestroyedPredicate(GamePiece obj)
@@ -44,19 +50,69 @@ public class BoardController : MonoBehaviour
         return obj.m_SubSquares.Count == 0;
     }
 
+    private void CorrectPositionsIndependent()
+    {
+        int positionIndex = Random.Range(0, kNumColumns - 2);
+        RectTransform rectTransform = m_BoardRoot.transform as RectTransform;
+        float stepX = rectTransform.sizeDelta.x / kNumColumns;
+        float stepY = rectTransform.sizeDelta.y / kNumRows;
+
+        foreach (var gamePiece in m_GamePieces)
+        {
+            foreach (var gamePieceSquare in gamePiece.m_SubSquares)
+            {
+                Debug.LogError("Velocity = " + gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude().ToString());
+                gamePieceSquare.SetMovedThisFrame(gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude() > 0.1f);
+
+                if (gamePieceSquare.IsStationary())
+                {
+                    // Get the position of the square in board space
+                    Vector3 positionInBoardSpace = m_BoardRoot.transform.InverseTransformPoint(gamePieceSquare.transform.position);
+                    int column = (int)(positionInBoardSpace.x / stepX);
+                    int row = (int)(positionInBoardSpace.y / stepY);
+                    positionInBoardSpace = new Vector3(stepX * (column + 0.5f), stepY * (row + 0.5f), positionInBoardSpace.z);
+                    gamePieceSquare.SnapPosition(m_BoardRoot.transform.TransformPoint(positionInBoardSpace));
+                }
+            }
+        }
+    }
+
     /**
      * Correct the positions of all pieces which aren't moving
      */
     private void CorrectPositions()
     {
+        int positionIndex = Random.Range(0, kNumColumns - 2);
+        RectTransform rectTransform = m_BoardRoot.transform as RectTransform;
+        float stepX = rectTransform.sizeDelta.x / kNumColumns;
+        float stepY = rectTransform.sizeDelta.y / kNumRows;
+
         foreach (var gamePiece in m_GamePieces)
         {
+            bool allSquaresSlowedDown = true;
             foreach (var gamePieceSquare in gamePiece.m_SubSquares)
             {
-                Debug.LogError("Velocity = " + gamePieceSquare.m_Rigidbody2D.velocity.SqrMagnitude().ToString());
-                if (gamePieceSquare.m_Rigidbody2D.velocity.SqrMagnitude() < 1f)
+                if (gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude() > 0.5f)
                 {
-                    
+                    allSquaresSlowedDown = false;
+                    break;
+                }
+            }
+
+            // Set the position of the center square then set all the others relative to it
+            if (allSquaresSlowedDown == true)
+            {
+                // Get the position of the square in board space
+                Vector3 positionInBoardSpace = m_BoardRoot.transform.InverseTransformPoint(gamePiece.m_CenterSquare.transform.position);
+                int column = (int)(positionInBoardSpace.x / stepX);
+                int row = (int)(positionInBoardSpace.y / stepY);
+                positionInBoardSpace = new Vector3(stepX * (column + 0.5f), stepY * (row + 0.5f), positionInBoardSpace.z);
+                gamePiece.m_CenterSquare.Rigidbody2D.MovePosition(m_BoardRoot.transform.TransformPoint(positionInBoardSpace));
+
+                foreach (var square in gamePiece.m_SubSquares)
+                {
+                    square.Rigidbody2D.MovePosition( 
+                       gamePiece.m_CenterSquare.transform.TransformPoint(square.StartingLocalPosition));
                 }
             }
         }
@@ -103,7 +159,10 @@ public class BoardController : MonoBehaviour
         for (;;)
         {
             yield return new WaitForSeconds(3.0f);
-            SpawnPiece();
+            if (dropPieces)
+            {
+                SpawnPiece();
+            }
         }
     }
 

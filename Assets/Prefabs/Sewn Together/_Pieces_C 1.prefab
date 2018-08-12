@@ -113,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1186564888439148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4668205, y: 0.46682167, z: -7}
+  m_LocalPosition: {x: -0.4668205, y: 0.46682167, z: 0}
   m_LocalScale: {x: 0.731303, y: 0.731303, z: 1}
   m_Children: []
   m_Father: {fileID: 4892139850372362}
@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1301036536353446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4697028, y: -0.0028817654, z: -7}
+  m_LocalPosition: {x: 0.4697028, y: -0.0028817654, z: 0}
   m_LocalScale: {x: 0.731303, y: 0.731303, z: 1}
   m_Children: []
   m_Father: {fileID: 4892139850372362}
@@ -139,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188422622842448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000000059604645, y: 0.46682167, z: -7}
+  m_LocalPosition: {x: -0.000000059604645, y: 0.46682167, z: 0}
   m_LocalScale: {x: 0.731303, y: 0.731303, z: 1}
   m_Children: []
   m_Father: {fileID: 4892139850372362}
@@ -152,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1360732606281956}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.69350004, y: 8.69, z: 0}
+  m_LocalPosition: {x: 0.69350004, y: 8.69, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4897538373698800}
@@ -169,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1774629059586978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -7}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.731303, y: 0.731303, z: 1}
   m_Children: []
   m_Father: {fileID: 4892139850372362}
@@ -187,13 +187,13 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd9fe5ca2cb9b4849968275ff88f6c1d, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!50 &50424667307354964
 Rigidbody2D:
@@ -207,13 +207,13 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd9fe5ca2cb9b4849968275ff88f6c1d, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!50 &50706295623787016
 Rigidbody2D:
@@ -227,13 +227,13 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd9fe5ca2cb9b4849968275ff88f6c1d, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!50 &50801220302345540
 Rigidbody2D:
@@ -247,13 +247,13 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fd9fe5ca2cb9b4849968275ff88f6c1d, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!61 &61485521589355866
 BoxCollider2D:
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SubSquares: []
-  m_CenterSquare: {fileID: 1774629059586978}
+  m_CenterSquare: {fileID: 114389116132622932}
 --- !u!114 &114381423673710246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -379,7 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114389116132622932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -391,7 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114390252962631004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,7 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Rigidbody2D: {fileID: 0}
 --- !u!114 &114720639267536236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,7 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: defb6ae3f938b4daa920dbfa92f50bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Rigidbody2D: {fileID: 0}
 --- !u!212 &212275722373032548
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -608,7 +604,7 @@ FixedJoint2D:
   m_GameObject: {fileID: 1186564888439148}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 0
+  m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 50801220302345540}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -625,7 +621,7 @@ FixedJoint2D:
   m_GameObject: {fileID: 1301036536353446}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 0
+  m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 50801220302345540}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -642,7 +638,7 @@ FixedJoint2D:
   m_GameObject: {fileID: 1188422622842448}
   m_Enabled: 1
   serializedVersion: 4
-  m_EnableCollision: 0
+  m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 50801220302345540}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity

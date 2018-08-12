@@ -5,7 +5,7 @@ using UnityEngine;
 public class GamePiece : MonoBehaviour
 {
     public List<GamePieceSquare> m_SubSquares;
-    public GameObject m_CenterSquare;
+    public GamePieceSquare m_CenterSquare;
 
 	// Use this for initialization
 	void Start () 
