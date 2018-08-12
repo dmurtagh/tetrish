@@ -46,7 +46,7 @@ public class GamePieceSquare : MonoBehaviour
         m_NumFramesWithoutMovement = 0;
     }
 
-	private void Start()
+    private void Awake()
 	{
         Rigidbody2D = GetComponent(typeof(Rigidbody2D)) as Rigidbody2D;
         StartingLocalPosition = gameObject.transform.localPosition;

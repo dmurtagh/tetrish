@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardController : MonoBehaviour 
+public class BoardController : Singleton<BoardController> 
 {
     public GameObject [] m_PiecePrefabs;
     public GameObject m_BoardRoot;
     public GameObject m_RowCheckerPrefab;
     public LayerMask m_BlocksLayerMask;
-    public bool dropPieces = true;  // Kill switch
-    public bool correctPositions = true;
+
+    public BoxCollider2D m_GameOverChecker;
+
+    public float m_TimeBetweenSpawns = 5.0f;
+    public float m_IntroWaitTime = 1.0f;
+
+    [Header("For Debugging")]
+    public bool m_DropPieces = true;  // Kill switch
+    public bool m_SnapPositions = true;
+
+    [Tooltip("-1 for infinite pieces")]
+    public int numPiecesToSpawn = -1;
 
     private List<GamePiece> m_GamePieces;
     private int kNumColumns = 10;
@@ -34,14 +44,43 @@ public class BoardController : MonoBehaviour
         StartCoroutine(SpawnerCoroutine());
 	}
 
+    public void ResetAll()
+    {
+        // Reset all the pieces
+        foreach (var piece in m_GamePieces)
+        {
+            foreach (GamePieceSquare gpc in piece.m_SubSquares)
+            {
+                Destroy(gpc.gameObject);
+            }
+        }
+
+        m_GamePieces.Clear();
+    }
+
     private void Update()
     {
         m_GamePieces.RemoveAll(IsDestroyedPredicate);
         CheckForLineCompletion();
 
-        if (correctPositions)
+        if (m_SnapPositions)
         {
-            CorrectPositionsIndependent();
+            SnapPositions();
+        }
+
+        CheckForGameOver();
+    }
+
+    private void CheckForGameOver()
+    {
+        Collider2D[] overlappingColliders = new Collider2D[kNumColumns];
+        ContactFilter2D filter2D = new ContactFilter2D();
+        filter2D.SetLayerMask(m_BlocksLayerMask);
+        filter2D.useLayerMask = true;
+        int numCollisions = m_GameOverChecker.OverlapCollider(filter2D, overlappingColliders);
+        if (numCollisions > 2)
+        {
+            ScoreController.Instance.GameOver = true;
         }
     }
 
@@ -50,7 +89,7 @@ public class BoardController : MonoBehaviour
         return obj.m_SubSquares.Count == 0;
     }
 
-    private void CorrectPositionsIndependent()
+    private void SnapPositions()
     {
         int positionIndex = Random.Range(0, kNumColumns - 2);
         RectTransform rectTransform = m_BoardRoot.transform as RectTransform;
@@ -61,8 +100,7 @@ public class BoardController : MonoBehaviour
         {
             foreach (var gamePieceSquare in gamePiece.m_SubSquares)
             {
-                Debug.LogError("Velocity = " + gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude().ToString());
-                gamePieceSquare.SetMovedThisFrame(gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude() > 0.1f);
+                gamePieceSquare.SetMovedThisFrame(gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude() > 0.05f);
 
                 if (gamePieceSquare.IsStationary())
                 {
@@ -70,49 +108,13 @@ public class BoardController : MonoBehaviour
                     Vector3 positionInBoardSpace = m_BoardRoot.transform.InverseTransformPoint(gamePieceSquare.transform.position);
                     int column = (int)(positionInBoardSpace.x / stepX);
                     int row = (int)(positionInBoardSpace.y / stepY);
-                    positionInBoardSpace = new Vector3(stepX * (column + 0.5f), stepY * (row + 0.5f), positionInBoardSpace.z);
-                    gamePieceSquare.SnapPosition(m_BoardRoot.transform.TransformPoint(positionInBoardSpace));
-                }
-            }
-        }
-    }
+                    Vector3 newPositionInBoardSpace = new Vector3(stepX * (column + 0.5f), stepY * (row + 0.5f), positionInBoardSpace.z);
 
-    /**
-     * Correct the positions of all pieces which aren't moving
-     */
-    private void CorrectPositions()
-    {
-        int positionIndex = Random.Range(0, kNumColumns - 2);
-        RectTransform rectTransform = m_BoardRoot.transform as RectTransform;
-        float stepX = rectTransform.sizeDelta.x / kNumColumns;
-        float stepY = rectTransform.sizeDelta.y / kNumRows;
-
-        foreach (var gamePiece in m_GamePieces)
-        {
-            bool allSquaresSlowedDown = true;
-            foreach (var gamePieceSquare in gamePiece.m_SubSquares)
-            {
-                if (gamePieceSquare.Rigidbody2D.velocity.SqrMagnitude() > 0.5f)
-                {
-                    allSquaresSlowedDown = false;
-                    break;
-                }
-            }
-
-            // Set the position of the center square then set all the others relative to it
-            if (allSquaresSlowedDown == true)
-            {
-                // Get the position of the square in board space
-                Vector3 positionInBoardSpace = m_BoardRoot.transform.InverseTransformPoint(gamePiece.m_CenterSquare.transform.position);
-                int column = (int)(positionInBoardSpace.x / stepX);
-                int row = (int)(positionInBoardSpace.y / stepY);
-                positionInBoardSpace = new Vector3(stepX * (column + 0.5f), stepY * (row + 0.5f), positionInBoardSpace.z);
-                gamePiece.m_CenterSquare.Rigidbody2D.MovePosition(m_BoardRoot.transform.TransformPoint(positionInBoardSpace));
-
-                foreach (var square in gamePiece.m_SubSquares)
-                {
-                    square.Rigidbody2D.MovePosition( 
-                       gamePiece.m_CenterSquare.transform.TransformPoint(square.StartingLocalPosition));
+                    float sqrMagnitude = (newPositionInBoardSpace - positionInBoardSpace).sqrMagnitude;
+                    if (sqrMagnitude > 0.001f) // Figured out the constant empirically
+                    {
+                        gamePieceSquare.SnapPosition(m_BoardRoot.transform.TransformPoint(newPositionInBoardSpace));
+                    }
                 }
             }
         }
@@ -158,10 +160,22 @@ public class BoardController : MonoBehaviour
     {
         for (;;)
         {
-            yield return new WaitForSeconds(3.0f);
-            if (dropPieces)
+            yield return new WaitForSeconds(m_TimeBetweenSpawns);
+            if (m_DropPieces)
             {
-                SpawnPiece();
+                if (numPiecesToSpawn != -1)
+                {
+                    numPiecesToSpawn--;
+                    if (numPiecesToSpawn == -1)
+                    {
+                        break;
+                    }
+                }
+
+                if (!ScoreController.Instance.GameOver)
+                {
+                    SpawnPiece();
+                }
             }
         }
     }
@@ -189,6 +203,8 @@ public class BoardController : MonoBehaviour
             newGameObject.transform.position.y,
             newGameObject.transform.position.z
         );
+
+        ScoreController.Instance.Score += 10;
 
         m_GamePieces.Add(gamePiece);
     }

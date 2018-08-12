@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     public float m_MaxSpeed = 10f;
     public float m_JumpForce = 700f;
 
+    public float m_FeetBlockForce = 120f;
+    public float m_PercentFramedToApplyBlockForce = 0.3f; // I found applying every frame was too much
+
     // For movement
     Rigidbody2D m_Rigidbody2d;
     bool m_FacingRight = true;
@@ -16,6 +19,9 @@ public class PlayerController : MonoBehaviour
 
     // For ground collisions
     public LayerMask m_WhatIsGround;
+    public LayerMask m_WhatIsRightWall; // For Tetris
+    public LayerMask m_WhatIsLeftWall;  // For Tetris
+    public LayerMask m_WhatAreBricks;   // For Tetris
     public Transform m_GroundCheck;
     bool m_Grounded = false;
     float m_GroundRadius = 0.2f;
@@ -94,7 +100,37 @@ public class PlayerController : MonoBehaviour
         {
             flip();
         }
+
+        DoTetrisFixedUpdate();
 	}
+
+    void DoTetrisFixedUpdate()
+    {
+        if (Random.Range(0f, 1f) > m_PercentFramedToApplyBlockForce)
+        {
+            return; // I found applying every frame was too much
+        }
+
+        // Logic to be able to prize a brick away from the right or left wall
+        Collider2D blockAtFeet = Physics2D.OverlapCircle(m_GroundCheck.position, m_GroundRadius, m_WhatAreBricks);
+        Collider2D rightWall = Physics2D.OverlapCircle(m_GroundCheck.position, m_GroundRadius, m_WhatIsRightWall);
+        Collider2D leftWall = Physics2D.OverlapCircle(m_GroundCheck.position, m_GroundRadius, m_WhatIsLeftWall);
+        Debug.Log("blockAtFeet = " + (blockAtFeet == null ? "false" : "true") +
+                  ", rightWall = " + (rightWall == null ? "false" : "true") +
+                  ", leftWall = " + (leftWall == null ? "false" : "true"));
+
+        float move = InputManager.Instance.GetLeftStickHorizontal();
+        if (blockAtFeet)
+        {
+            if ((rightWall != null && move > 0) ||
+                (leftWall != null && move < 0))
+            {
+                // Apply a force to the blockAtFeet
+                Rigidbody2D blockRigidBody = blockAtFeet.GetComponent(typeof(Rigidbody2D)) as Rigidbody2D;
+                blockRigidBody.AddForce(new Vector2(-move * m_FeetBlockForce, 0));
+            }
+        }
+    }
 
     void flip()
     {
