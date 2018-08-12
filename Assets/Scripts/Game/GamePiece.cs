@@ -7,7 +7,7 @@ public class GamePiece : MonoBehaviour
     public List<GamePieceSquare> m_SubSquares;
     public GamePieceSquare m_CenterSquare;
 
-    private static int numSquaresRemoved = 0;
+    private static int numSquaresRemoved = 1;
 
 	// Use this for initialization
 	void Start () 

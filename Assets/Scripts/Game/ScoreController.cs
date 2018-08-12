@@ -14,6 +14,8 @@ public class ScoreController : Singleton<ScoreController>
     public GameObject m_GameOverFrame;
     public TextMesh m_GameOverScoreText;
     public TextMesh m_GameOverScoreShadow;
+    public TextMesh m_GameOverLevelText;
+    public TextMesh m_GameOverLevelShadow;
     public TextMesh m_GameOverLinesText;
     public TextMesh m_GameOverLinesShadow;
 
@@ -42,6 +44,8 @@ public class ScoreController : Singleton<ScoreController>
         {
             m_Score = value;
             UpdateText();
+
+            Level = (m_Score / 250) + 1;
         }
     }
 
@@ -112,8 +116,10 @@ public class ScoreController : Singleton<ScoreController>
         {
             m_GameOverScoreText.text = m_Score.ToString();
             m_GameOverScoreShadow.text = m_Score.ToString();
-            m_GameOverLinesText.text = m_Level.ToString();
-            m_GameOverLinesShadow.text = m_Level.ToString();
+            m_GameOverLevelText.text = m_Level.ToString();
+            m_GameOverLevelShadow.text = m_Level.ToString();
+            m_GameOverLinesText.text = m_Lines.ToString();
+            m_GameOverLinesShadow.text = m_Lines.ToString();
         }
 	}
 }

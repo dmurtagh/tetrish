@@ -20,9 +20,9 @@ public class InputManager : Singleton<InputManager>
     public bool GetResetKeyDown()
     {
         return Input.GetKeyDown(KeyCode.Escape) || 
-                    // Back Button (button 6 on windows, 10 on mac)
-                    Input.GetKeyDown(KeyCode.Joystick1Button6) || 
-                    Input.GetKeyDown(KeyCode.Joystick1Button10); 
+                    // LT Button (button 6 on windows, 10 on mac)
+                    Input.GetKeyDown(KeyCode.Joystick1Button4) ||
+                    Input.GetKeyDown(KeyCode.Joystick1Button13);
     }
 
     public bool GetNextTrackKeyDown()

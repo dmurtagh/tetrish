@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public float m_FeetBlockForce = 120f;
     public float m_PercentFramedToApplyBlockForce = 0.3f; // I found applying every frame was too much
 
+    public AudioClip m_JumpSound;
+    public AudioSource m_AudioSource;
+
     // For movement
     Rigidbody2D m_Rigidbody2d;
     bool m_FacingRight = true;
@@ -59,6 +62,7 @@ public class PlayerController : MonoBehaviour
         if ((m_Grounded || !m_DoubleJump) && 
             InputManager.Instance.GetJumpKeyDown())
         {
+            m_AudioSource.PlayOneShot(m_JumpSound, 0.5f);
             if(!m_Grounded)
             {
                 m_Rigidbody2d.velocity = new Vector2(m_Rigidbody2d.velocity.x, 0f); // Zero out the y velocity so the jump has equal effect, whether we're stationary, jumping or falling

@@ -78,7 +78,7 @@ public class BoardController : Singleton<BoardController>
         filter2D.SetLayerMask(m_BlocksLayerMask);
         filter2D.useLayerMask = true;
         int numCollisions = m_GameOverChecker.OverlapCollider(filter2D, overlappingColliders);
-        if (numCollisions > 2)
+        if (numCollisions > 4)
         {
             ScoreController.Instance.GameOver = true;
         }
@@ -160,7 +160,12 @@ public class BoardController : Singleton<BoardController>
     {
         for (;;)
         {
-            yield return new WaitForSeconds(m_TimeBetweenSpawns);
+            // Modify timeBetweenSpawns using the player level
+            float modifier = Mathf.Clamp(ScoreController.Instance.Level - 1f, 0f, 3.5f);
+            float timeBetweenSpawns = m_TimeBetweenSpawns - modifier;
+            timeBetweenSpawns = Mathf.Clamp(timeBetweenSpawns, 0.1f, m_TimeBetweenSpawns);
+
+            yield return new WaitForSeconds(timeBetweenSpawns);
             if (m_DropPieces)
             {
                 if (numPiecesToSpawn != -1)
