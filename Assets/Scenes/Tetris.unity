@@ -5897,6 +5897,10 @@ MonoBehaviour:
   - {fileID: 1657500642262132, guid: 514f30884d6c44bc79f92b710ce24fe9, type: 2}
   - {fileID: 1400101029986920, guid: b9bd39ae79f24419796c5a276b0cec70, type: 2}
   - {fileID: 1311610221081096, guid: cec9f1eb8acc54e839972303f362f567, type: 2}
+  - {fileID: 1255861704835876, guid: a95d10465d482445097377d2a9a7790d, type: 2}
+  - {fileID: 1360732606281956, guid: f1526aed1fdaf42b7b5d0305b9e4c6d1, type: 2}
+  - {fileID: 1657500642262132, guid: 514f30884d6c44bc79f92b710ce24fe9, type: 2}
+  - {fileID: 1400101029986920, guid: b9bd39ae79f24419796c5a276b0cec70, type: 2}
   m_BoardRoot: {fileID: 684229487}
   m_RowCheckerPrefab: {fileID: 1990854289600592, guid: 2cb510b40bce7429ab0f985fdb6b6976,
     type: 2}
